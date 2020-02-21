@@ -24,7 +24,7 @@ class NoteType extends AbstractType
                                                           "max" => 20]
                                             ])
             ->add('avis', TextareaType::class, [ "label" => "Avis"])
-            ->add('membre_note', EntityType::class, [ "class" => Membre::class,
+            ->add('membre_note_id', EntityType::class, [ "class" => Membre::class,
                                                  "choice_label" =>"email",
                                                  "label" => "Adresse mail du membre que vous notez"])
             
