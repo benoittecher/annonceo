@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags("app")}}
+        {% endblock %}
+    </head>
+    <body>
+        {% block nav %}
+            <a href='{{path("home")}}'>Accueil</a>
+            <a href='{{path("categorie_add")}}'>Ajouter une catégorie</a>
+            <a href='{{path("membre_add")}}'>Ajouter un membre</a>
+            <a href='{{path("annonce_add")}}'>Ajouter une annonce</a>
+            <a href='{{path("note_add")}}'>Ajouter une note</a>
+            <a href='{{path("app_login")}}'>Se connecter</a>
+            <a href='{{path("app_login")}}'>S'inscrire</a>
+        {% endblock %}
+        {% block body %}
+        {{ message }}
+            <div class="row">
+                <aside class="col-4">
+                    <form method="POST">
+                        <div>
+                            <label>Catégorie</label>
+                            <select name="categorie">
+                                <option value="">Toutes les catégories</option>
+                                {% for cat in categories %}
+                                        <option value='{{ cat.id }}'>  {{ cat.titre }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Régions</label>
+                            <select name="region">
+                                <option value="">Toutes les régions</option>
+                                {% for region in regions %}
+                                        <option value='{{ region.ville }}'>  {{ region.ville }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label>Membres</label>
+                            <select name="membre">
+                                <option value="">Tous les membres</option>
+                                {% for m in membres %}
+                                        <option value='{{ m.id }}'>  {{ m.pseudo }} </option>
+                                {% endfor %}                                
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Prix</label>
+                            <input type=range name="prix" min=0 max=10000>
+                        </div>
+                        
+                        <button>Filtrer</button>
+                    </form>
+                </aside>
+
+                <section class="col-8">
+                    {% for ann in annonces %}
+                        <p>{{ ann.titre }}</p>
+                    {% endfor %}                                
+                </section>
+            </div>
+        
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

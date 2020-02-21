@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PhotoController!{% endblock %}
+
+{% block body %}
+<h1> Ajouter des photos </h1>
+
+    <section class="section has-background-white-ter">
+        {{ form_start(form)}}
+            <button class="button is-primary is-fullwidth">Ajouter</button>
+        {{ form_end(form)}}
+    </section>
+{% endblock %}
