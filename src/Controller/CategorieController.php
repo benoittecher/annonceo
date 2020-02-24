@@ -8,6 +8,7 @@ use App\Form\CategorieType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Categorie;
+use App\Repository\CategorieRepository as RepCat;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -65,7 +66,14 @@ class CategorieController extends AbstractController
 
         }
     }
-    
+
+    /**
+     * @Route("categorie_list", name="categorie_list")
+     */
+    public function list(RepCat $cat){
+        $categories = $cat->findAll();
+        return $this->render("categorie/list.html.twig", compact("categories"));
+    }
         
     
 }

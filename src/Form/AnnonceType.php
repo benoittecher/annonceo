@@ -3,10 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Annonce;
+use App\Entity\Membre;
+use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type as Input;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class AnnonceType extends AbstractType
 {
@@ -21,19 +24,20 @@ class AnnonceType extends AbstractType
             ->add('ville')
             ->add('cp')
             ->add('pays')
-            ->add('date_enregistrement')
-            ->add('membre', EntityType::class, [
+            
+            /*->add('membre', EntityType::class, [
                 "class" => Membre::class,
                 "choice_label" =>"pseudo",
                 "placeholder" => "Choisissez un membre"
-            ])
-            ->add('photo')
+            ])*/
+            
             ->add('categorie', EntityType::class, [ 
                 "class"         => Categorie::class,
                 "choice_label"  => function(Categorie $cat){
                     return $cat->getTitre() . " (" . substr($cat->getMotscles(), 0, 10) . ")";
                 },
                 "placeholder"   => "Choisissez une catégorie"])
+            ->add("ajouter", Input\SubmitType::class, ["label" => "Enregistrer"])
         ;
     }
 

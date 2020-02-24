@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\MembreType;
 use App\Entity\Membre;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Form\AnnonceType;
+use App\Form\MembreType;
 
 
 class MembreController extends AbstractController
@@ -47,11 +50,34 @@ class MembreController extends AbstractController
                                         ->setCivilite($request->request("membre")["civilite"])
                                         ->setRoles([$request->request("membre")["statut"]] ?? ["ROLE_USER"])
                                         ->setDateEnregistrement(date("Y-m-d H:i:s"));
-            $em->persist($categorie);
+            $em->persist($membre);
             $resultat = $em->flush();
-            $message = "La catégorie a bien été enregistrée";
+            $message = "Le membre a bien été enregistré";
             $session->set("message", $message);
             return $this->redirectToRoute("home");
+            
+    }
+
+    /**
+     * @Route("/profil", name="profil")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function profil(){
+            return $this->render("membre/profil.html.twig");
+        
+            
+        
+    }
+
+    /**
+     * @Route("/profil/annonce/ajouter", name="nouvelle_annonce")
+     */
+    public function nouvelle_annonce(Request $rq, EntityManagerInterface $em){
+        $form = $this->createForm(AnnonceType::class);
+        $form->handleRequest($rq);
+
+        $form = $form->createView();
+        return $this->render("membre/annonce.html.twig", compact("form"));
             
     }
 

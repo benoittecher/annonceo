@@ -1,0 +1,29 @@
+{% extends "menu/menu_connecte.html.twig" %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <div class="column">
+        <div class="column is-half">
+        {{ form_row(form.titre) }}
+        {{form_row(form.description_courte)}}
+        {{form_row(form.description_longue)}}
+        {{form_row(form.prix)}}
+        {{form_row(form.categorie)}}
+
+        </div>
+        <div class="column is-half">
+        <input type="file" name="photo1">
+        <input type="file" name="photo2">
+        <input type="file" name="photo3">
+        <input type="file" name="photo4">
+        <input type="file" name="photo5">
+        {{ form_row(form.pays) }}
+        {{form_row(form.cp)}}
+        {{form_row(form.ville)}}
+        {{form_row(form.pays)}}
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}
+

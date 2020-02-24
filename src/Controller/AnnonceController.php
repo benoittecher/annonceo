@@ -12,6 +12,7 @@ use App\Repository\AnnonceRepository as AR;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use App\Entity\Annonce;
+use App\Repository\AnnonceRepository as RepAnn;
 
 class AnnonceController extends AbstractController
 {
@@ -61,5 +62,12 @@ class AnnonceController extends AbstractController
             $session->set("message", $message);
             return $this->redirectToRoute("home");
             
+    }
+    /**
+     * @Route("/annonces", name="annonces")
+     */
+    public function list(RepAnn $ann){
+        $annonces = $ann->findAll();
+        return $this->render("annonce/list.html.twig", compact("annonces"));
     }
 }

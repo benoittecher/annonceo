@@ -9,13 +9,7 @@
     </head>
     <body>
         {% block nav %}
-            <a href='{{path("home")}}'>Accueil</a>
-            <a href='{{path("categorie_add")}}'>Ajouter une catégorie</a>
-            <a href='{{path("membre_add")}}'>Ajouter un membre</a>
-            <a href='{{path("annonce_add")}}'>Ajouter une annonce</a>
-            <a href='{{path("note_add")}}'>Ajouter une note</a>
-            <a href='{{path("app_login")}}'>Se connecter</a>
-            <a href='{{path("app_login")}}'>S'inscrire</a>
+            {% include "menu/visiteur.html.twig" %}
         {% endblock %}
         {% block body %}
         {{ message }}
