@@ -1,0 +1,12 @@
+<div class="columns box">
+    <div class="column is-one-quarter">
+        <a href='{{path("detailler_annonce", {annonce_id: annonce.id })}}'><img src="{{ dossier_images_annonces ~ annonce.photo.photo1 }}" class="vignette"></a>
+    </div>
+    <div class="column">
+        <h5>{{ annonce.titre }}</h5>
+        <p>{{ annonce.descriptioncourte }}</p>
+    </div>
+    {% if app.user == annonce.membre %}
+        <a href='{{path("modifier_annonce", {annonce_id: annonce.id })}}'>Modifier votre annonce</a>
+    {% endif %}
+</div>

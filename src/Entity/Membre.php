@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\NoteRepository as NR;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MembreRepository")
@@ -34,7 +37,7 @@ class Membre implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, unique=true)
      */
     private $pseudo;
 
@@ -62,6 +65,22 @@ class Membre implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $date_enregistrement;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Annonce", mappedBy="membre")
+     */
+    private $annonces;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="membre_note")
+     */
+    private $notes_recues;
+
+    public function __construct()
+    {
+        $this->annonces = new ArrayCollection();
+        $this->notes_recues = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -212,4 +231,70 @@ class Membre implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Annonce[]
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->annonces;
+    }
+
+    public function addAnnonce(Annonce $annonce): self
+    {
+        if (!$this->annonces->contains($annonce)) {
+            $this->annonces[] = $annonce;
+            $annonce->setMembre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonce $annonce): self
+    {
+        if ($this->annonces->contains($annonce)) {
+            $this->annonces->removeElement($annonce);
+            // set the owning side to null (unless already changed)
+            if ($annonce->getMembre() === $this) {
+                $annonce->setMembre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotesRecues(): Collection
+    {
+        return $this->notes_recues;
+    }
+
+    public function addNotesRecue(Note $notesRecue): self
+    {
+        if (!$this->notes_recues->contains($notesRecue)) {
+            $this->notes_recues[] = $notesRecue;
+            $notesRecue->setMembreNote($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotesRecue(Note $notesRecue): self
+    {
+        if ($this->notes_recues->contains($notesRecue)) {
+            $this->notes_recues->removeElement($notesRecue);
+            // set the owning side to null (unless already changed)
+            if ($notesRecue->getMembreNote() === $this) {
+                $notesRecue->setMembreNote(null);
+            }
+        }
+
+        return $this;
+    }
+    /*public function noteMoyenneRecue(){
+        $rep = new NR;
+        return $rep->noteMoyenneRecue($this->id);
+    }*/
 }

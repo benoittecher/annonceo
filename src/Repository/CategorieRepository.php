@@ -47,4 +47,21 @@ class CategorieRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function recherche($string){
+        $array = explode (" ", $string);
+        $where = "";
+        foreach ($array as $indice => $mot){
+            $where .= ($where ? " OR " : "") . " c.titre LIKE :mot$indice OR c.motscles LIKE :mot$indice ";
+        }
+            $resultat = $this->createQueryBuilder('c')
+                             ->andWhere($where);
+        foreach ($array as $indice => $mot){
+            $resultat->setParameter("mot$indice", "%$mot%");
+        }
+        
+        return $resultat->getQuery()
+                        ->getResult()
+        ;
+
+    }
 }

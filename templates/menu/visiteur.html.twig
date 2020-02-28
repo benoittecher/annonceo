@@ -1,10 +1,15 @@
+{% extends "base.html.twig" %}
 {% block nav %}
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <a href='{{path("home")}}'>Accueil</a>
-        <a href='{{path("annonce_add")}}'>Ajouter une annonce</a>
+        <a href='{{path("nouvelle_annonce")}}'>Ajouter une annonce</a>
         <a href='{{path("note_add")}}'>Ajouter une note</a>
         <a href='{{path("app_login")}}'>Se connecter</a>
         <a href='{{path("app_login")}}'>S'inscrire</a>
-        <a href='{{path("app_logout")}}'>Se déconnecter</a>
+        <a href='{{path("app_logout")}}'>Se déconnecter Hello</a>
     </nav>
+    <form>
+        <input name="recherche">
+        <button>Rechercher</button>
+    </form>
 {% endblock %}

@@ -62,4 +62,38 @@ class AnnonceRepository extends ServiceEntityRepository
         ;
     }
     */
+    
+    public function top5actifs(){
+        $requete = $this->createQueryBuilder('a')
+        ->select("m.pseudo, COUNT(a.membre)")
+        ->join("a.membre", "m")
+        ->groupBy("m.pseudo")
+        ->orderBy("COUNT(a.membre)", 'DESC')
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult();
+    return $requete;
+    }
+
+    public function top5anciennes(){
+        $requete = $this->createQueryBuilder('a')
+        ->select("a.id, a.titre, a.date_enregistrement")
+        ->orderBy('a.date_enregistrement', 'ASC')
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult();
+    return $requete;
+    }
+
+    public function top5categories(){
+        return $this->createQueryBuilder('a')
+        ->select("c.id, COUNT(c.id) nb")
+        ->join("a.categorie", "c")
+        ->groupBy("c.id")
+        ->orderBy("nb", "DESC")
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult();
+
+    }
 }

@@ -1,6 +1,16 @@
-{% extends "base.html.twig" %}
+{% extends "menu/visiteur.html.twig" %}
 {% block nav %}
     <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="">
+                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria expanded="">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </div>
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
                 <a class="navbar-item" href="{{path("accueil")}}">
@@ -11,6 +21,9 @@
                 </a>
                 <a class="navbar-item" href="{{path("profil")}}">
                     Profil
+                </a>
+                <a class="navbar-item" href="{{path("nouvelle_annonce")}}">
+                    Publier une annonce
                 </a>
             </div>
             <div class="navbar-end">
@@ -24,4 +37,8 @@
             </div>
         </div>
     </nav>
+    <form>
+        <input name="recherche">
+        <button>Rechercher</button>
+    </form>
 {% endblock %}

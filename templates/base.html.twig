@@ -9,58 +9,21 @@
     </head>
     <body>
         {% block nav %}
+        {% if is_granted("IS_AUTHENTICATED_FULLY")%}
+            {% include "menu/menu_connecte.html.twig" %}
+        {% else %}
             {% include "menu/visiteur.html.twig" %}
+        {% endif %}
         {% endblock %}
-        {% block body %}
-        {{ message }}
-            <div class="row">
-                <aside class="col-4">
-                    <form method="POST">
-                        <div>
-                            <label>Catégorie</label>
-                            <select name="categorie">
-                                <option value="">Toutes les catégories</option>
-                                {% for cat in categories %}
-                                        <option value='{{ cat.id }}'>  {{ cat.titre }} </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div>
-                            <label>Régions</label>
-                            <select name="region">
-                                <option value="">Toutes les régions</option>
-                                {% for region in regions %}
-                                        <option value='{{ region.ville }}'>  {{ region.ville }} </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label>Membres</label>
-                            <select name="membre">
-                                <option value="">Tous les membres</option>
-                                {% for m in membres %}
-                                        <option value='{{ m.id }}'>  {{ m.pseudo }} </option>
-                                {% endfor %}                                
-                            </select>
-                        </div>
-
-                        <div>
-                            <label>Prix</label>
-                            <input type=range name="prix" min=0 max=10000>
-                        </div>
-                        
-                        <button>Filtrer</button>
-                    </form>
-                </aside>
-
-                <section class="col-8">
-                    {% for ann in annonces %}
-                        <p>{{ ann.titre }}</p>
-                    {% endfor %}                                
-                </section>
+        {% for type, messages in app.flashes %}
+            <div class="has-background-{{type}}">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
             </div>
+        {% endfor %}
+        {% block body %}
+            
         
         {% endblock %}
         {% block javascripts %}{% endblock %}

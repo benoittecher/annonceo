@@ -8,6 +8,7 @@ use App\Form\NoteType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Categorie;
 use App\Repository\MembreRepository as MR;
+use App\Repository\NoteRepository as NR;
 use App\Repository\AnnonceRepository as AR;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -70,4 +71,13 @@ class AnnonceController extends AbstractController
         $annonces = $ann->findAll();
         return $this->render("annonce/list.html.twig", compact("annonces"));
     }
+    /**
+     * @Route("detailler_annonce/{annonce_id}", name="detailler_annonce")
+     */
+    public function detailler_annonce(AR $annRep, NR $noteRep, int $annonce_id){
+        $annonce = $annRep->find($annonce_id);
+        $moyenne = $noteRep->noteMoyenneRecue($annonce->getMembre()->getId());
+        return $this->render("annonce/annonce_detaillee.html.twig", compact("annonce", 'moyenne'));
+    }
+    
 }

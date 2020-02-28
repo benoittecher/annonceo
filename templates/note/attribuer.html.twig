@@ -1,0 +1,26 @@
+{% extends "menu/menu_connecte.html.twig" %}
+{% block body %}
+<div class="columns section">
+    <h1>Veuillez noter cet individu :</h1>
+        <div class="column is-half">
+            <p><strong>Pseudo :</strong>{{ membre.pseudo }}</p>
+            <p><strong>Date d'inscription :</strong></p>{{ membre.dateenregistrement|date("d/m/Y")}}</p>
+            <p class ="columns">
+                <strong class="column is-one-third">Annonces : </strong>
+                <div class="column">
+                {% for annonce in membre.annonces %}
+                    <p>{{ annonce.titre }}</p>
+                {% endfor %}
+                </div>
+            </p>
+    <div class="column box">
+        <h1 class="title has-text-primary has-text-centered">Attribuer une note :</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.note) }}
+        {{ form_row(form.avis)}}
+        {{ form_row(form.ajouter, { attr: {"class": "button is-primary is-fullwidth"}})}}
+    {{form_end(form)}}
+</div>
+        
+{% endblock %}

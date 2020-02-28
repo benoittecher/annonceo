@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Membre;
+use App\Entity\Note;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -36,6 +37,28 @@ class MembreRepository extends ServiceEntityRepository implements PasswordUpgrad
         $this->_em->flush();
     }
 
+    public function findByRole($role){
+        $resultat = $this->createQueryBuilder("m")
+                            ->where("m.roles LIKE '%$role%'")
+                            ->getQuery()->getResult();
+        return $resultat;
+    }
+
+    /*public function findTopMembresNotes(){
+        $entityManager = $this->getEntityManager();
+        $requeteSQL = "SELECT m.id, m.pseudo, AVG(n.note) moyenne
+                       FROM " . Membre::class . " m JOIN " . Note::class . " n 
+                       GROUP BY m.id
+                       ORDER BY moyenne DESC
+                       LIMIT 5
+                       ";
+        $requete = $entityManager->createQuery($requeteSQL);
+        return $requete->getResult();
+    }*/
+
+
+    
+
     // /**
     //  * @return Membre[] Returns an array of Membre objects
     //  */
@@ -64,4 +87,5 @@ class MembreRepository extends ServiceEntityRepository implements PasswordUpgrad
         ;
     }
     */
+
 }
